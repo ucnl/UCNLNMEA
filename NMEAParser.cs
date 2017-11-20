@@ -311,6 +311,7 @@ namespace UCNLNMEA
         GVT,
         HAL,
         HAR,
+        HDN,
         HIG,
         HIT,
         HPK,
@@ -352,6 +353,7 @@ namespace UCNLNMEA
         LAT,
         LEC,
         LMM,
+        LNA,
         LRD,
         LSE,
         LSP,
@@ -515,6 +517,7 @@ namespace UCNLNMEA
         WTC,
         WST,
         YAS,
+        ZMA,
         any,
         unknown
     }
