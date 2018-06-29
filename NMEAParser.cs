@@ -261,6 +261,7 @@ namespace UCNLNMEA
         CWD,
         CWV,
         CYZ,
+        DBG,
         DCC,
         DEB,
         DFI,
@@ -448,6 +449,7 @@ namespace UCNLNMEA
         RSL,
         RSM,
         RWI,
+        RWL,
         RME,
         RTN,
         SAI,
@@ -496,10 +498,12 @@ namespace UCNLNMEA
         TTS,
         TWC,
         TXI,
+        UCN,
         UME,
         UNI,
         UNP,
         UNF,
+        UWV,
         VAN,
         VAR,
         VCM,
@@ -585,7 +589,7 @@ namespace UCNLNMEA
 
     /// <summary>
     /// NMEA0183 2.0 Sentences parser/builder
-    /// (C) Alexander Dikarev, 2011-2015
+    /// (C) Alexander Dikarev, 2011-2018
     /// </summary>
     public static class NMEAParser
     {
