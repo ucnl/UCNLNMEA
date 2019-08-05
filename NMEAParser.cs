@@ -361,6 +361,7 @@ namespace UCNLNMEA
         LTF,
         LWR,
         MCL,
+        MCP,
         MDL,
         MEC,
         MEG,
@@ -410,6 +411,7 @@ namespace UCNLNMEA
         NSM,
         NTK,
         NVC,
+        NVL,
         NVS,
         NVO,
         OAR,
@@ -1689,7 +1691,7 @@ namespace UCNLNMEA
             var source = sourceString.TrimEnd(SentenceEndDelimiter.ToCharArray());
 
             if (source.Length > MaxSentenceLength)
-                throw new ArgumentException(string.Format("Specified string \"{0}\" length exceeds {0} characters", source.Length, MaxSentenceLength));
+                throw new ArgumentException(string.Format("Specified string \"{0}\" length exceeds {1} characters", source.Length, MaxSentenceLength));
 
             if (!source.StartsWith(SentenceStartDelimiter.ToString()))
                 throw new ArgumentException(string.Format("{0} sentence must starts with valid sentence start delimiter \"{1}\"", StandartID, SentenceStartDelimiter));
