@@ -289,14 +289,14 @@ namespace UCNLNMEA
         ERC,
         ESA,
         FDN,
+        FEC,
         FHE,
         FJN,
         FMM,
         FNT,
         FRC,
         FTG,
-        FUJ,
-        FEC,
+        FUJ,        
         FUG,
         FUR,
         GAM,
@@ -511,6 +511,7 @@ namespace UCNLNMEA
         VCM,
         VEX,
         VIS,
+        VLB,
         VMR,
         WAL,
         WBG,
@@ -591,7 +592,7 @@ namespace UCNLNMEA
 
     /// <summary>
     /// NMEA0183 2.0 Sentences parser/builder
-    /// (C) Alexander Dikarev, 2011-2018
+    /// (C) Aleksander Dikarev, 2011-2019
     /// </summary>
     public static class NMEAParser
     {
@@ -1267,8 +1268,21 @@ namespace UCNLNMEA
                                                          //          0x04 - clear memory, cold start = 1
                        {"105", "x"} // 0 - switch debug mode off, 1 - switch debug mode on
                     }
-                }
+                },
                 
+                #endregion
+
+                #region Furuno
+
+                {
+                    ManufacturerCodes.FEC,
+                    new Dictionary<string, string>()
+                    {
+                        // $PFEC,hdcom,N,Er,0010
+                        { ",hdcom", "c--c,c--c,xxxx" }, // no data for the sentence :(
+                    }
+                },
+
                 #endregion
             };
 
