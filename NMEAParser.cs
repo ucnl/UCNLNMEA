@@ -4,42 +4,7 @@ using System.Globalization;
 using System.Text;
 
 namespace UCNLNMEA
-{
-    /// Known talkers:
-    /// AG, AP, CD, CR, CS, CT, CV, CX, DE, DF, EC, EP, ER, GL, GP, HC, HE, 
-    /// HN, II, IN, LA, LC, OM, P, RA, SD, SN, TR, SS, TI, VD, DM, VW, WI, 
-    /// YX, ZA, ZC, ZQ, ZV
-
-    /// Supported standart sentences:
-    /// AAM, ALM, APA, APB, ASD, BEC, BOD, BWC, BWR, BWW, DBK, DBS, DBT, DCN, 
-    /// DPT, DSC, DSE, DSI, DSR, DTM, FSI, GBS, GGA, GLC, GLL, GRS, GST, GSA, 
-    /// GSV, GTD, GXA, HDG, HDM, HDT, HSC, LCD, MSK, MSS, MWD, MTW, MWV, OLN, 
-    /// OSD, ROO, RMA, RMB, RMC, ROT, RPM, RSA, RSD, RTE, SFI, STN, TLL, TRF, 
-    /// TTM, TXT, VBW, VDR, VHW, VLW, VPW, VTG, VWR, WCV, WDC, WDR, WNC, WPL, 
-    /// XDR, XTE, XTR, ZDA, ZDL, ZFO, ZTG
-
-    /// Supported proprietary sentences:
-    /// 
-    /// Garmin Corp        : B, E, F, M, T, V, Z, C, CE, C1, C1E, I, IE, O
-    /// Martech Inc.       : 001, 101, 102, 103, 104, 251, 300, 301, 313, 314, 320, 390, 420, 490, 520, 590, 605, 705
-    /// Trimble Navigation : DG, EV, ",GGK", ID, SM, ",AVR", ",BPQ", ",PJK", ",PJT", ",VGK", ",VHD"
-    /// Magellan           : CMD, CSM, DRT, DWP, RTE, TRK, VER, WPL, ST
-    /// Motorola           : G
-    /// Rockwell Int.      : RID, ILOG
-    /// Starlink           : B
-    /// SiRF               : 100, 101, 102, 103, 104, 105
-
-
-    /// version info
-    /// 0.1 - full lists NMEA 0183 2.0 talkers IDs and sentenses IDs, Garmin proprietary sentenses
-    /// 0.2 - Martech proprietary sentenses added, Datum dictionary added
-    ///     - Trimble Navigation, Magellan proprietary sentences added
-    ///     - "..." formatter support added
-    /// 0.3 - MANY bugs fixed
-    /// 0.4 - bugs fixed, new proprietary sentences added (SRF)
-    /// 0.8 - bugs fixed, GLONASS suport, common improvements
-
-
+{    
     /// <summary>
     /// Talkers identifiers
     /// </summary>
@@ -58,6 +23,8 @@ namespace UCNLNMEA
         EC,
         EP,
         ER,
+        GA, // 03-JUN-2020
+        GB, // 02-JUN-2020
         GL,
         GP,
         GN,
@@ -118,6 +85,7 @@ namespace UCNLNMEA
         GGA,
         GLC,
         GLL,
+        GNS,
         GRS,
         GST,
         GSA,
@@ -127,6 +95,7 @@ namespace UCNLNMEA
         HDG,
         HDM,
         HDT,
+        HEV,
         HSC,
         LCD,
         MSK,
@@ -205,6 +174,7 @@ namespace UCNLNMEA
         ATV,
         AVN,
         AWA,
+        BAT,
         BBL,
         BBR,
         BDV,
@@ -592,7 +562,7 @@ namespace UCNLNMEA
 
     /// <summary>
     /// NMEA0183 2.0 Sentences parser/builder
-    /// (C) Aleksander Dikarev, 2011-2019
+    /// (C) Aleksander Dikarev, 2011-2020
     /// </summary>
     public static class NMEAParser
     {
@@ -1019,7 +989,8 @@ namespace UCNLNMEA
                                                             { SentenceIdentifiers.GBS, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
                                                             { SentenceIdentifiers.GGA, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,0=Fix not availible|1=GPS fix|2=DGPS fix,xx,x.x,x.x,M,x.x,M,x.x,xxxx" },
                                                             { SentenceIdentifiers.GLC, "xxxx,x.x,a,x.x,a,x.x,a,x.x,a,x.x,a,x.x,B=Blink|C=Cycle|S=SNR|A=Valid" },
-                                                            { SentenceIdentifiers.GLL, "llll.ll,N=North|S=South,yyyyy.yy,E=East|W=West,hhmmss.ss,A=Valid|V=Invalid,A=Valid|V=Invalid" },
+                                                            { SentenceIdentifiers.GLL, "llll.ll,N=North|S=South,yyyyy.yy,E=East|W=West,hhmmss.ss,A=Valid|V=Invalid,A=Valid|V=Invalid" },                
+                                                            { SentenceIdentifiers.GNS, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,с--с,xx,x.x,x.x,x.x,x.x,x,a" },
                                                             { SentenceIdentifiers.GRS, "hhmmss,x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
                                                             { SentenceIdentifiers.GSA, "M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x,x.x,x.x" },
                                                             { SentenceIdentifiers.GST, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
@@ -1029,6 +1000,7 @@ namespace UCNLNMEA
                                                             { SentenceIdentifiers.HDG, "x.x,x.x,a,x.x,a" },
                                                             { SentenceIdentifiers.HDM, "x.x,M" },
                                                             { SentenceIdentifiers.HDT, "x.x,T" },
+                                                            { SentenceIdentifiers.HEV, "x.x,A" },
                                                             { SentenceIdentifiers.HSC, "x.x,T,x.x,M" },
                                                             { SentenceIdentifiers.LCD, "xxxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx" },
                                                             { SentenceIdentifiers.MSK, "xxx.x,xx,xxx,xx,N" },
@@ -1040,7 +1012,7 @@ namespace UCNLNMEA
                                                             { SentenceIdentifiers.OSD, "x.x,A,x.x,a,x.x,a,x.x,x.x,a" },
                                                             { SentenceIdentifiers.RMA, "A,llll.ll,N=North|S=South,yyyyy.yy,E=East|W=West,x.x,x.x,x.x,x.x,x.x,a" },
                                                             { SentenceIdentifiers.RMB, "A,x.x,a,c--c,c--c,llll.ll,a,yyyyy.yy,a,x.x,x.x,x.x,A,A" },
-                                                            { SentenceIdentifiers.RMC, "hhmmss.ss,A=Valid|V=Invalid,llll.ll,N=North|S=South,yyyyy.yy,E=East|W=West,x.x,x.x,ddmmyy,x.x,a,a" },
+                                                            { SentenceIdentifiers.RMC, "hhmmss.ss,A=Valid|V=Invalid,llll.ll,N=North|S=South,yyyyy.yy,E=East|W=West,x.x,x.x,ddmmyy,x.x,a,a,..." },
                                                             { SentenceIdentifiers.ROO, "c---c,...." }, // TODO: !!!
                                                             { SentenceIdentifiers.ROT, "x.x,A" },
                                                             { SentenceIdentifiers.RPM, "a,x,x.x,x.x,A" },
