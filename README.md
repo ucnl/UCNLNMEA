@@ -1,6 +1,8 @@
 # UCNLNMEA
 ## NMEA 0183 protocol support library
 
+> This repository is a supported version of a library I posted back in 2011 at [CodeProject](https://www.codeproject.com/Articles/279647/NMEA-0183-sentence-parser-builder)
+
 The library is able to parse and build any NMEA0183-sentences. Common used standard sentences are supported 'from the box'.
 The parser/builder is made as a static class.  
 To use it, just:  
