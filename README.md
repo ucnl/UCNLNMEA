@@ -91,6 +91,45 @@ To use it, just:
 | ZFO | UTC & Time from Origin Waypoint |
 | ZTG | UTC & Time to Destination Waypoint |
 
+## List of known Talkers
+
+| Talker ID | Description |
+| :---: | :--- |
+| AG | Autopilot - General |
+| AP | Autopilot - Magnetic |
+| CD | Communications - Digital Selective Calling (DSC) |
+| CR | Communications - Receiver / Beacon Receiver |,
+| CS | Communications - Sattelite |
+| CT | Communications - Radio-Telephone (MF/HF) |,
+| CV | Communications - Radio-Telephone (VHF) |
+| CX | Communications - Scanning Receiver |
+| DF | Direction Finder |
+| EC | Electronic Chart Display & Information System (ECDIS) |
+| EP | Emergency Position Indicating Beacon (EPIRB) |
+| ER | Engine Room Monitoring Systems |
+| GP | Global Positioning System (GPS) |
+| HC | Heading - Magnetic Compass |
+| HE | Heading - North Seeking Gyro |
+| HN | Heading - Non North Seeking Gyro |
+| II | Integrated instrumentation |
+| IN | Integrated Navigation |
+| LC | Loran C |
+| P | Proprietary Code |
+| RA | RADAR and/or ARPA |
+| SD | Sounder, Depth |
+| SN | Electronic Positioning System, other/general |
+| SS | Souder, Scanning |
+| TI | Turn Rate Indicator |
+| VD | Velocity Sensor, Doppler, other/general |
+| DM | Velocity Sensor, Speed Log, Water, Magnetic |
+| VW | Velocity Sensor, Speed Log, Water, Mechanical |
+| WI | Weather Instruments |
+| YX | Transduser |
+| ZA | Timekeeper - Atomic Clock |
+| ZC | Timekeeper - Chronometer |
+| ZQ | Timekeeper - Quartz |
+| ZV | Radio Update, WWV or WWVH | 
+
 
 ## Standard sentences examples
 
