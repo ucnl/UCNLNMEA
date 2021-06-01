@@ -13,6 +13,7 @@ To use it, just:
 ## List of supported standard sentences
 
 | Sentence ID | Description |
+| :---: | :--- |
 | AAM | Waypoint Arrival Alarm |
 | ALM | GPS Almanac Data |
 | APB | Autopilot Sentence \"B\" |
@@ -26,7 +27,7 @@ To use it, just:
 | DBK | Depth Below Keel |
 | DBS | Depth Below Surface |
 | DBT | Depth Below Transduser |
-| DCN | [Obsolete] Decca Position |
+| DCN | *Obsolete* Decca Position |
 | DPT | Depth |
 | DSC | Digital Selective Calling Information |
 | DSE | Extended DSC |
@@ -54,7 +55,7 @@ To use it, just:
 | MTW | Water Temperature |
 | MWD | Wind Direction & Speed |
 | MWV | Wind Speed & Angle |
-| OLN | [Obsolete] Omega Line Numbers |
+| OLN | *Obsolete* Omega Line Numbers |
 | OSD | Own Ship Data |
 | RMA | Recommend Minimum Specific Loran-C Data |
 | RMB | Recommend Minimum Navigation Information |
@@ -65,10 +66,10 @@ To use it, just:
 | RSA | Rudder Sensor Angle |
 | RSD | RADAR System Data |
 | RTE | Routes |
-| SFI | Scanning Frequency Information |,
+| SFI | Scanning Frequency Information |
 | STN | Multiple Data ID |
 | TLL | Target Latitude & Longitude |
-| TRF | [Obsolete] TRANSIT Fix Data |
+| TRF | *Obsolete* TRANSIT Fix Data |
 | TTM | Tracked Target Message |
 | VBW | Dual Ground/Water Speed |
 | VDR | Set and Drift |
