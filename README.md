@@ -107,7 +107,11 @@ To use it, just:
 | EC | Electronic Chart Display & Information System (ECDIS) |
 | EP | Emergency Position Indicating Beacon (EPIRB) |
 | ER | Engine Room Monitoring Systems |
+| GA | Gallileo |
+| GB | BeiDou|
+| GL | GLONASS |        
 | GP | Global Positioning System (GPS) |
+| GN | Mixed satellite fix |
 | HC | Heading - Magnetic Compass |
 | HE | Heading - North Seeking Gyro |
 | HN | Heading - Non North Seeking Gyro |
