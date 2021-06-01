@@ -3,11 +3,93 @@
 
 > This repository is a supported version of a library I posted back in 2011 at [CodeProject](https://www.codeproject.com/Articles/279647/NMEA-0183-sentence-parser-builder)
 
-The library is able to parse and build any NMEA0183-sentences. Common used standard sentences are supported 'from the box'.
+The library is able to parse and build **any** NMEA0183-sentences. Common used standard sentences are supported 'from the box'.
+
 The parser/builder is made as a static class.  
 To use it, just:  
 * Add UCNLNMEA to your project's references list.
 * Add a propriate using declaration: ```using UCNLNMEA;```
+
+## List of supported standard sentences
+
+| Sentence ID | Description |
+| AAM | Waypoint Arrival Alarm |
+| ALM | GPS Almanac Data |
+| APB | Autopilot Sentence \"B\" |
+| APA | Autopilot Sentence \"A\" |
+| ASD | Autopilot System Data |
+| BEC | Bearing & Distance to Waypoint, Dead reckoning |
+| BOD | Bearing, Origin to Destination |
+| BWC | Bearing & Distance to Waypoint, Great Circle |
+| BWR | Bearing & Distance to Waypoint, Rhumb Line |
+| BWW | Bearing, Waypoint to Waypoint |
+| DBK | Depth Below Keel |
+| DBS | Depth Below Surface |
+| DBT | Depth Below Transduser |
+| DCN | [Obsolete] Decca Position |
+| DPT | Depth |
+| DSC | Digital Selective Calling Information |
+| DSE | Extended DSC |
+| DSI | DSC Transponder Initiate |
+| DSR | DSC Transponder Response |
+| DTM | Datum Reference |
+| FSI | Frequency Set Information |
+| GBS | GBS Satellite Fault Detection |
+| GGA | Global Positioning System Fix Data |
+| GLC | Geographic Position, Loran-C |
+| GLL | Geographic Position, Latitude/Longitude |
+| GRS | GPS Range Residuals |
+| GSA | GPS DOP and Active Satellites |
+| GST | GPS Pseudorange Noise Statistics |
+| GSV | GPS Sattelites in View |
+| GTD | Geograpic Location in Time Differences |
+| GXA | Transit Position |
+| HDG | Heading, Deviation & Variation |
+| HDM | Heading, Magnetic |
+| HDT | Heading, True |
+| HSC | Heading Steering Command |
+| LCD | Loran-C Signal Data |
+| MSK | MSK Receiver Interface (for DGPS Beacon Receivers) |
+| MSS | MSK Receiver Signal Status |
+| MTW | Water Temperature |
+| MWD | Wind Direction & Speed |
+| MWV | Wind Speed & Angle |
+| OLN | [Obsolete] Omega Line Numbers |
+| OSD | Own Ship Data |
+| RMA | Recommend Minimum Specific Loran-C Data |
+| RMB | Recommend Minimum Navigation Information |
+| RMC | Recommend Minimum Specific GPS/TRANSIT Data |
+| ROO | Waypoints in Active Route |
+| ROT | Rate of Turn |
+| RPM | Revolutions |
+| RSA | Rudder Sensor Angle |
+| RSD | RADAR System Data |
+| RTE | Routes |
+| SFI | Scanning Frequency Information |,
+| STN | Multiple Data ID |
+| TLL | Target Latitude & Longitude |
+| TRF | [Obsolete] TRANSIT Fix Data |
+| TTM | Tracked Target Message |
+| VBW | Dual Ground/Water Speed |
+| VDR | Set and Drift |
+| VHW | Water Speed and Heading |
+| VLW | Distance Traveled through Water |
+| VPW | Speed, Measured Parallel to Wind |
+| VTG | Track Made Good and Ground Speed |
+| VWR | Relative Wind Speed & Angle |
+| WCV | Waypoint Closure Velocity |
+| WDC | Distance to Waypoint, Great Circle |
+| WDR | Distance to Waypoint, Rhumb Line |
+| WNC | Distance, Waypoint to Waypoint |
+| WPL | Waypoint Location |
+| XDR | Transducer Measurement |
+| XTE | Cross-Track Error, Measured |
+| XTR | Cross-Track Error, Dead Reckoning |
+| ZDA | Time & Date |
+| ZDL | Time & Distance to Variable Point |
+| ZFO | UTC & Time from Origin Waypoint |
+| ZTG | UTC & Time to Destination Waypoint |
+
 
 ## Standard sentences examples
 
