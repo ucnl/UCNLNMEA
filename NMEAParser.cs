@@ -419,6 +419,7 @@ namespace UCNLNMEA
         RGC,
         RGY,
         RMR,
+        RPH,
         RSL,
         RSM,
         RWE,
