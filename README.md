@@ -179,8 +179,8 @@ string rmc_sentence = NMEAParser.BuildSentence(
  {
     DateTime.Now,            // UTC time
     "Valid",                 // Time is valid
-    lat, "North",            // Position latitude, degrees
-    lon, "East",             // Position longitude, degrees
+    lat, "N",                // Position latitude, degrees
+    lon, "E",                // Position longitude, degrees
     speedKmh.Value / 0.5144, // Speed
     null,                    // track true  
     DateTime.Now,            // UTC date
