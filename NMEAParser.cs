@@ -997,7 +997,11 @@ namespace UCNLNMEA
                                                             { SentenceIdentifiers.GLL, "llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,hhmmss.ss,A=Valid|V=Invalid,A=Valid|V=Invalid" },                
                                                             { SentenceIdentifiers.GNS, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,с--с,xx,x.x,x.x,x.x,x.x,x,a" },
                                                             { SentenceIdentifiers.GRS, "hhmmss,x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
-                                                            { SentenceIdentifiers.GSA, "M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x,x.x,x.x" },
+
+                                                            /// Missed last paramter in the sentence description, 27 APR 2022
+                                                            // $GNGSA,A,                    3,01,03,04,22,31,09,06,  ,  ,  ,  ,  ,1.57,0.82,1.34,1*05
+                                                            //    GSA,"M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x ,x.x ,x.x,x" },
+                                                            { SentenceIdentifiers.GSA, "M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x,x.x,x.x,x" }, //
                                                             { SentenceIdentifiers.GST, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
                                                             { SentenceIdentifiers.GSV, "x,x,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx," },
                                                             { SentenceIdentifiers.GTD, "x.x,x.x,x.x,x.x,x.x" },
@@ -1677,7 +1681,9 @@ namespace UCNLNMEA
         public static NMEASentence Parse(string sourceString)
         {            
             if (!sourceString.EndsWith(SentenceEndDelimiter))
+            {
                 throw new ArgumentException(string.Format("{0} sentence must ends with valid sentence end delimiter \"{1}\"", StandartID, @"\r\n"));
+            }
 
             var source = sourceString.TrimEnd(SentenceEndDelimiter.ToCharArray());
 
