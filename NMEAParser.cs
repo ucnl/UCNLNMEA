@@ -175,6 +175,7 @@ namespace UCNLNMEA
         ATV,
         AVN,
         AWA,
+        AZM,
         BAT,
         BBL,
         BBR,
@@ -476,9 +477,11 @@ namespace UCNLNMEA
         TXI,
         UCN,
         UME,
+        UNA,
         UNI,
         UNP,
         UNF,
+        UNV,
         UWV,
         VAN,
         VAR,
@@ -567,7 +570,7 @@ namespace UCNLNMEA
 
     /// <summary>
     /// NMEA0183 2.0 Sentences parser/builder
-    /// (C) Aleksander Dikarev, 2011-2020
+    /// (C) Aleksander Dikarev, 2011-2023
     /// </summary>
     public static class NMEAParser
     {
@@ -1662,7 +1665,7 @@ namespace UCNLNMEA
             sb.Append("0x");
 
             for (int i = 0; i < bytes.Length; i++)
-                sb.Append(bytes[i].ToString("x2"));
+                sb.Append(bytes[i].ToString("X2"));
 
             return sb.ToString();
         }
