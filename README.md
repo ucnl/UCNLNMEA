@@ -5,7 +5,7 @@
 
 The library is able to parse and build **any** NMEA0183-sentences. Common used standard sentences are supported 'from the box'.
 
-## If you looking for a *tiny* and *fast* **C/Arduino** code for parsing NMEA0183-sentences, please, refer to [UCNL_ALibs library](https://github.com/ucnl/UCNL_ALibs/blob/main/src/libs/ucnl_nmea.cpp)
+## If you looking for a *tiny* and *fast* **C/Arduino** code for parsing NMEA0183-sentences, please, go to C folder in this repository
 
 The parser/builder is made as a static class.  
 To use it, just:  
