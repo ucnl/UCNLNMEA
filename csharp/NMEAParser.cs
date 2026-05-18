@@ -4,15 +4,23 @@ using System.Globalization;
 using System.Text;
 
 namespace UCNLNMEA
-{    
+{
     /// <summary>
     /// Talkers identifiers
     /// </summary>
     public enum TalkerIdentifiers
     {
-        AI, // 07-NOV-2025 added for !AIVDM/AIVDO AIS sentences parsing
+        AB,
+        AD,
         AG,
+        AI,
+        AN,
         AP,
+        AR,
+        AS,
+        AT,
+        AX,
+        BS,
         CD,
         CR,
         CS,
@@ -20,7 +28,7 @@ namespace UCNLNMEA
         CV,
         CX,
         DE,
-        DF,       
+        DF,
         EC,
         EP,
         ER,
@@ -39,6 +47,7 @@ namespace UCNLNMEA
         OM,
         P,
         RA,
+        SA,
         SD,
         SN,
         TR,
@@ -122,9 +131,9 @@ namespace UCNLNMEA
         TTM,
         TXT,
         VBW,
-        VDR,
         VDM,
         VDO,
+        VDR,
         VHW,
         VLW,
         VPW,
@@ -271,7 +280,7 @@ namespace UCNLNMEA
         FNT,
         FRC,
         FTG,
-        FUJ,        
+        FUJ,
         FUG,
         FUR,
         GAM,
@@ -378,7 +387,7 @@ namespace UCNLNMEA
         MUR,
         MVX,
         MXX,
-        MES,        
+        MES,
         NEF,
         NMR,
         NGS,
@@ -440,7 +449,7 @@ namespace UCNLNMEA
         SEC,
         SEP,
         SFN,
-        SGC,        
+        SGC,
         SIG,
         SIM,
         SKA,
@@ -588,9 +597,7 @@ namespace UCNLNMEA
         public static readonly int MaxFullSentenceLength = 4255;//82;
         public static readonly int MaxSentenceLength = 4252;//79;
         public static readonly char SentenceStartDelimiter = '$';
-        public static readonly string SentenceStartAISDelemiter = "!A";
-        public static readonly char AISStart1 = '!';
-        public static readonly char AISStart2 = 'A';
+        //public static readonly char SentenceStartDelimiterAIS = '!';
         public static readonly string SentenceEndDelimiter = "\r\n";
         public static readonly char FieldDelimiter = ',';
         public static readonly char CheckSumFieldDelimiter = '*';
@@ -608,130 +615,125 @@ namespace UCNLNMEA
 
         #region Talker descriptions
 
-        private static Dictionary<TalkerIdentifiers, string> TalkerDescriptions = 
-            new Dictionary<TalkerIdentifiers, string>() { 
-                { TalkerIdentifiers.AI, "AIS"},                                                          
-                { TalkerIdentifiers.AG, "Autopilot - General" },
-                { TalkerIdentifiers.AP, "Autopilot - Magnetic" },
-                { TalkerIdentifiers.CD, "Communications - Digital Selective Calling (DSC)" },
-                { TalkerIdentifiers.CR, "Communications - Receiver / Beacon Receiver" },
-                { TalkerIdentifiers.CS, "Communications - Sattelite" },
-                { TalkerIdentifiers.CT, "Communications - Radio-Telephone (MF/HF)" },
-                { TalkerIdentifiers.CV, "Communications - Radio-Telephone (VHF)" },
-                { TalkerIdentifiers.CX, "Communications - Scanning Receiver" },
-                { TalkerIdentifiers.DF, "Direction Finder" },
-                { TalkerIdentifiers.EC, "Electronic Chart Display & Information System (ECDIS)" },
-                { TalkerIdentifiers.EP, "Emergency Position Indicating Beacon (EPIRB)" },
-                { TalkerIdentifiers.ER, "Engine Room Monitoring Systems" },
-                { TalkerIdentifiers.GP, "Global Positioning System (GPS)" },
-                { TalkerIdentifiers.HC, "Heading - Magnetic Compass" },
-                { TalkerIdentifiers.HE, "Heading - North Seeking Gyro" },
-                { TalkerIdentifiers.HN, "Heading - Non North Seeking Gyro" },
-                { TalkerIdentifiers.II, "Integrated instrumentation" },
-                { TalkerIdentifiers.IN, "Integrated Navigation" },
-                { TalkerIdentifiers.LC, "Loran C" },
-                { TalkerIdentifiers.P, "Proprietary Code" },
-                { TalkerIdentifiers.RA, "RADAR and/or ARPA" },
-                { TalkerIdentifiers.SD, "Sounder, Depth" },
-                { TalkerIdentifiers.SN, "Electronic Positioning System, other/general" },
-                { TalkerIdentifiers.SS, "Souder, Scanning" },
-                { TalkerIdentifiers.TI, "Turn Rate Indicator" },
-                { TalkerIdentifiers.VD, "Velocity Sensor, Doppler, other/general" },
-                { TalkerIdentifiers.DM, "Velocity Sensor, Speed Log, Water, Magnetic" },
-                { TalkerIdentifiers.VW, "Velocity Sensor, Speed Log, Water, Mechanical" },
-                { TalkerIdentifiers.WI, "Weather Instruments" },
-                { TalkerIdentifiers.YX, "Transduser" },
-                { TalkerIdentifiers.ZA, "Timekeeper - Atomic Clock" },
-                { TalkerIdentifiers.ZC, "Timekeeper - Chronometer" },
-                { TalkerIdentifiers.ZQ, "Timekeeper - Quartz" },
-                { TalkerIdentifiers.ZV, "Radio Update, WWV or WWVH" }                                                              
-            };
+        private static Dictionary<TalkerIdentifiers, string> TalkerDescriptions =
+            new Dictionary<TalkerIdentifiers, string>() { { TalkerIdentifiers.AG, "Autopilot - General" },
+                                                          { TalkerIdentifiers.AP, "Autopilot - Magnetic" },
+                                                          { TalkerIdentifiers.CD, "Communications - Digital Selective Calling (DSC)" },
+                                                          { TalkerIdentifiers.CR, "Communications - Receiver / Beacon Receiver" },
+                                                          { TalkerIdentifiers.CS, "Communications - Sattelite" },
+                                                          { TalkerIdentifiers.CT, "Communications - Radio-Telephone (MF/HF)" },
+                                                          { TalkerIdentifiers.CV, "Communications - Radio-Telephone (VHF)" },
+                                                          { TalkerIdentifiers.CX, "Communications - Scanning Receiver" },
+                                                          { TalkerIdentifiers.DF, "Direction Finder" },
+                                                          { TalkerIdentifiers.EC, "Electronic Chart Display & Information System (ECDIS)" },
+                                                          { TalkerIdentifiers.EP, "Emergency Position Indicating Beacon (EPIRB)" },
+                                                          { TalkerIdentifiers.ER, "Engine Room Monitoring Systems" },
+                                                          { TalkerIdentifiers.GP, "Global Positioning System (GPS)" },
+                                                          { TalkerIdentifiers.HC, "Heading - Magnetic Compass" },
+                                                          { TalkerIdentifiers.HE, "Heading - North Seeking Gyro" },
+                                                          { TalkerIdentifiers.HN, "Heading - Non North Seeking Gyro" },
+                                                          { TalkerIdentifiers.II, "Integrated instrumentation" },
+                                                          { TalkerIdentifiers.IN, "Integrated Navigation" },
+                                                          { TalkerIdentifiers.LC, "Loran C" },
+                                                          { TalkerIdentifiers.P, "Proprietary Code" },
+                                                          { TalkerIdentifiers.RA, "RADAR and/or ARPA" },
+                                                          { TalkerIdentifiers.SD, "Sounder, Depth" },
+                                                          { TalkerIdentifiers.SN, "Electronic Positioning System, other/general" },
+                                                          { TalkerIdentifiers.SS, "Souder, Scanning" },
+                                                          { TalkerIdentifiers.TI, "Turn Rate Indicator" },
+                                                          { TalkerIdentifiers.VD, "Velocity Sensor, Doppler, other/general" },
+                                                          { TalkerIdentifiers.DM, "Velocity Sensor, Speed Log, Water, Magnetic" },
+                                                          { TalkerIdentifiers.VW, "Velocity Sensor, Speed Log, Water, Mechanical" },
+                                                          { TalkerIdentifiers.WI, "Weather Instruments" },
+                                                          { TalkerIdentifiers.YX, "Transduser" },
+                                                          { TalkerIdentifiers.ZA, "Timekeeper - Atomic Clock" },
+                                                          { TalkerIdentifiers.ZC, "Timekeeper - Chronometer" },
+                                                          { TalkerIdentifiers.ZQ, "Timekeeper - Quartz" },
+                                                          { TalkerIdentifiers.ZV, "Radio Update, WWV or WWVH" }
+                                                        };
 
         #endregion
 
         #region Sentences descriptions
 
         private static Dictionary<SentenceIdentifiers, string> SentencesDescriptions =
-            new Dictionary<SentenceIdentifiers, string>() {
-                { SentenceIdentifiers.AAM, "Waypoint Arrival Alarm" },
-                { SentenceIdentifiers.ALM, "GPS Almanac Data" },
-                { SentenceIdentifiers.APB, "Autopilot Sentence \"B\"" },
-                { SentenceIdentifiers.APA, "Autopilot Sentence \"A\"" },
-                { SentenceIdentifiers.ASD, "Autopilot System Data" },
-                { SentenceIdentifiers.BEC, "Bearing & Distance to Waypoint, Dead reckoning" },
-                { SentenceIdentifiers.BOD, "Bearing, Origin to Destination" },
-                { SentenceIdentifiers.BWC, "Bearing & Distance to Waypoint, Great Circle" },
-                { SentenceIdentifiers.BWR, "Bearing & Distance to Waypoint, Rhumb Line" },
-                { SentenceIdentifiers.BWW, "Bearing, Waypoint to Waypoint" },
-                { SentenceIdentifiers.DBK, "Depth Below Keel" },
-                { SentenceIdentifiers.DBS, "Depth Below Surface" },
-                { SentenceIdentifiers.DBT, "Depth Below Transduser" },
-                { SentenceIdentifiers.DCN, "[Obsolete] Decca Position" },
-                { SentenceIdentifiers.DPT, "Depth" },
-                { SentenceIdentifiers.DSC, "Digital Selective Calling Information" },
-                { SentenceIdentifiers.DSE, "Extended DSC" },
-                { SentenceIdentifiers.DSI, "DSC Transponder Initiate" },
-                { SentenceIdentifiers.DSR, "DSC Transponder Response" },
-                { SentenceIdentifiers.DTM, "Datum Reference" },
-                { SentenceIdentifiers.FSI, "Frequency Set Information" },
-                { SentenceIdentifiers.GBS, "GBS Satellite Fault Detection" },
-                { SentenceIdentifiers.GGA, "Global Positioning System Fix Data" },
-                { SentenceIdentifiers.GLC, "Geographic Position, Loran-C" },
-                { SentenceIdentifiers.GLL, "Geographic Position, Latitude/Longitude" },
-                { SentenceIdentifiers.GRS, "GPS Range Residuals" },
-                { SentenceIdentifiers.GSA, "GPS DOP and Active Satellites" },
-                { SentenceIdentifiers.GST, "GPS Pseudorange Noise Statistics" },
-                { SentenceIdentifiers.GSV, "GPS Sattelites in View" },
-                { SentenceIdentifiers.GTD, "Geograpic Location in Time Differences" },
-                { SentenceIdentifiers.GXA, "Transit Position" },
-                { SentenceIdentifiers.HDG, "Heading, Deviation & Variation" },
-                { SentenceIdentifiers.HDM, "Heading, Magnetic" },
-                { SentenceIdentifiers.HDT, "Heading, True" },
-                { SentenceIdentifiers.HSC, "Heading Steering Command" },
-                { SentenceIdentifiers.LCD, "Loran-C Signal Data" },
-                { SentenceIdentifiers.MSK, "MSK Receiver Interface (for DGPS Beacon Receivers)" },
-                { SentenceIdentifiers.MSS, "MSK Receiver Signal Status" },
-                { SentenceIdentifiers.MTW, "Water Temperature" },
-                { SentenceIdentifiers.MWD, "Wind Direction & Speed" },
-                { SentenceIdentifiers.MWV, "Wind Speed & Angle" },
-                { SentenceIdentifiers.OLN, "[Obsolete] Omega Line Numbers" },
-                { SentenceIdentifiers.OSD, "Own Ship Data" },
-                { SentenceIdentifiers.RMA, "Recommend Minimum Specific Loran-C Data" },
-                { SentenceIdentifiers.RMB, "Recommend Minimum Navigation Information" },
-                { SentenceIdentifiers.RMC, "Recommend Minimum Specific GPS/TRANSIT Data" },
-                { SentenceIdentifiers.ROO, "Waypoints in Active Route" },
-                { SentenceIdentifiers.ROT, "Rate of Turn" },
-                { SentenceIdentifiers.RPM, "Revolutions" },
-                { SentenceIdentifiers.RSA, "Rudder Sensor Angle" },
-                { SentenceIdentifiers.RSD, "RADAR System Data" },
-                { SentenceIdentifiers.RTE, "Routes" },
-                { SentenceIdentifiers.SFI, "Scanning Frequency Information" },
-                { SentenceIdentifiers.STN, "Multiple Data ID" },
-                { SentenceIdentifiers.TLL, "Target Latitude & Longitude" },
-                { SentenceIdentifiers.TRF, "[Obsolete] TRANSIT Fix Data" },
-                { SentenceIdentifiers.TTM, "Tracked Target Message" },
-                { SentenceIdentifiers.VBW, "Dual Ground/Water Speed" },
-                { SentenceIdentifiers.VDR, "Set and Drift" },
-                { SentenceIdentifiers.VDM, "AIS VDM"},
-                { SentenceIdentifiers.VDO, "AIS VDO"},
-                { SentenceIdentifiers.VHW, "Water Speed and Heading" },
-                { SentenceIdentifiers.VLW, "Distance Traveled through Water" },
-                { SentenceIdentifiers.VPW, "Speed, Measured Parallel to Wind" },
-                { SentenceIdentifiers.VTG, "Track Made Good and Ground Speed" },
-                { SentenceIdentifiers.VWR, "Relative Wind Speed & Angle" },
-                { SentenceIdentifiers.WCV, "Waypoint Closure Velocity" },
-                { SentenceIdentifiers.WDC, "Distance to Waypoint, Great Circle" },
-                { SentenceIdentifiers.WDR, "Distance to Waypoint, Rhumb Line" },
-                { SentenceIdentifiers.WNC, "Distance, Waypoint to Waypoint" },
-                { SentenceIdentifiers.WPL, "Waypoint Location" },
-                { SentenceIdentifiers.XDR, "Transducer Measurement" },
-                { SentenceIdentifiers.XTE, "Cross-Track Error, Measured" },
-                { SentenceIdentifiers.XTR, "Cross-Track Error, Dead Reckoning" },
-                { SentenceIdentifiers.ZDA, "Time & Date" },
-                { SentenceIdentifiers.ZDL, "Time & Distance to Variable Point" },
-                { SentenceIdentifiers.ZFO, "UTC & Time from Origin Waypoint" },
-                { SentenceIdentifiers.ZTG, "UTC & Time to Destination Waypoint" }
-            };
+            new Dictionary<SentenceIdentifiers, string>() { { SentenceIdentifiers.AAM, "Waypoint Arrival Alarm" },
+                                                            { SentenceIdentifiers.ALM, "GPS Almanac Data" },
+                                                            { SentenceIdentifiers.APB, "Autopilot Sentence \"B\"" },
+                                                            { SentenceIdentifiers.APA, "Autopilot Sentence \"A\"" },
+                                                            { SentenceIdentifiers.ASD, "Autopilot System Data" },
+                                                            { SentenceIdentifiers.BEC, "Bearing & Distance to Waypoint, Dead reckoning" },
+                                                            { SentenceIdentifiers.BOD, "Bearing, Origin to Destination" },
+                                                            { SentenceIdentifiers.BWC, "Bearing & Distance to Waypoint, Great Circle" },
+                                                            { SentenceIdentifiers.BWR, "Bearing & Distance to Waypoint, Rhumb Line" },
+                                                            { SentenceIdentifiers.BWW, "Bearing, Waypoint to Waypoint" },
+                                                            { SentenceIdentifiers.DBK, "Depth Below Keel" },
+                                                            { SentenceIdentifiers.DBS, "Depth Below Surface" },
+                                                            { SentenceIdentifiers.DBT, "Depth Below Transduser" },
+                                                            { SentenceIdentifiers.DCN, "[Obsolete] Decca Position" },
+                                                            { SentenceIdentifiers.DPT, "Depth" },
+                                                            { SentenceIdentifiers.DSC, "Digital Selective Calling Information" },
+                                                            { SentenceIdentifiers.DSE, "Extended DSC" },
+                                                            { SentenceIdentifiers.DSI, "DSC Transponder Initiate" },
+                                                            { SentenceIdentifiers.DSR, "DSC Transponder Response" },
+                                                            { SentenceIdentifiers.DTM, "Datum Reference" },
+                                                            { SentenceIdentifiers.FSI, "Frequency Set Information" },
+                                                            { SentenceIdentifiers.GBS, "GBS Satellite Fault Detection" },
+                                                            { SentenceIdentifiers.GGA, "Global Positioning System Fix Data" },
+                                                            { SentenceIdentifiers.GLC, "Geographic Position, Loran-C" },
+                                                            { SentenceIdentifiers.GLL, "Geographic Position, Latitude/Longitude" },
+                                                            { SentenceIdentifiers.GRS, "GPS Range Residuals" },
+                                                            { SentenceIdentifiers.GSA, "GPS DOP and Active Satellites" },
+                                                            { SentenceIdentifiers.GST, "GPS Pseudorange Noise Statistics" },
+                                                            { SentenceIdentifiers.GSV, "GPS Sattelites in View" },
+                                                            { SentenceIdentifiers.GTD, "Geograpic Location in Time Differences" },
+                                                            { SentenceIdentifiers.GXA, "Transit Position" },
+                                                            { SentenceIdentifiers.HDG, "Heading, Deviation & Variation" },
+                                                            { SentenceIdentifiers.HDM, "Heading, Magnetic" },
+                                                            { SentenceIdentifiers.HDT, "Heading, True" },
+                                                            { SentenceIdentifiers.HSC, "Heading Steering Command" },
+                                                            { SentenceIdentifiers.LCD, "Loran-C Signal Data" },
+                                                            { SentenceIdentifiers.MSK, "MSK Receiver Interface (for DGPS Beacon Receivers)" },
+                                                            { SentenceIdentifiers.MSS, "MSK Receiver Signal Status" },
+                                                            { SentenceIdentifiers.MTW, "Water Temperature" },
+                                                            { SentenceIdentifiers.MWD, "Wind Direction & Speed" },
+                                                            { SentenceIdentifiers.MWV, "Wind Speed & Angle" },
+                                                            { SentenceIdentifiers.OLN, "[Obsolete] Omega Line Numbers" },
+                                                            { SentenceIdentifiers.OSD, "Own Ship Data" },
+                                                            { SentenceIdentifiers.RMA, "Recommend Minimum Specific Loran-C Data" },
+                                                            { SentenceIdentifiers.RMB, "Recommend Minimum Navigation Information" },
+                                                            { SentenceIdentifiers.RMC, "Recommend Minimum Specific GPS/TRANSIT Data" },
+                                                            { SentenceIdentifiers.ROO, "Waypoints in Active Route" },
+                                                            { SentenceIdentifiers.ROT, "Rate of Turn" },
+                                                            { SentenceIdentifiers.RPM, "Revolutions" },
+                                                            { SentenceIdentifiers.RSA, "Rudder Sensor Angle" },
+                                                            { SentenceIdentifiers.RSD, "RADAR System Data" },
+                                                            { SentenceIdentifiers.RTE, "Routes" },
+                                                            { SentenceIdentifiers.SFI, "Scanning Frequency Information" },
+                                                            { SentenceIdentifiers.STN, "Multiple Data ID" },
+                                                            { SentenceIdentifiers.TLL, "Target Latitude & Longitude" },
+                                                            { SentenceIdentifiers.TRF, "[Obsolete] TRANSIT Fix Data" },
+                                                            { SentenceIdentifiers.TTM, "Tracked Target Message" },
+                                                            { SentenceIdentifiers.VBW, "Dual Ground/Water Speed" },
+                                                            { SentenceIdentifiers.VDR, "Set and Drift" },
+                                                            { SentenceIdentifiers.VHW, "Water Speed and Heading" },
+                                                            { SentenceIdentifiers.VLW, "Distance Traveled through Water" },
+                                                            { SentenceIdentifiers.VPW, "Speed, Measured Parallel to Wind" },
+                                                            { SentenceIdentifiers.VTG, "Track Made Good and Ground Speed" },
+                                                            { SentenceIdentifiers.VWR, "Relative Wind Speed & Angle" },
+                                                            { SentenceIdentifiers.WCV, "Waypoint Closure Velocity" },
+                                                            { SentenceIdentifiers.WDC, "Distance to Waypoint, Great Circle" },
+                                                            { SentenceIdentifiers.WDR, "Distance to Waypoint, Rhumb Line" },
+                                                            { SentenceIdentifiers.WNC, "Distance, Waypoint to Waypoint" },
+                                                            { SentenceIdentifiers.WPL, "Waypoint Location" },
+                                                            { SentenceIdentifiers.XDR, "Transducer Measurement" },
+                                                            { SentenceIdentifiers.XTE, "Cross-Track Error, Measured" },
+                                                            { SentenceIdentifiers.XTR, "Cross-Track Error, Dead Reckoning" },
+                                                            { SentenceIdentifiers.ZDA, "Time & Date" },
+                                                            { SentenceIdentifiers.ZDL, "Time & Distance to Variable Point" },
+                                                            { SentenceIdentifiers.ZFO, "UTC & Time from Origin Waypoint" },
+                                                            { SentenceIdentifiers.ZTG, "UTC & Time to Destination Waypoint" }
+                                                          };
 
         #endregion        
 
@@ -982,96 +984,96 @@ namespace UCNLNMEA
         /// yyyyy.yy - latitude
         /// </summary>
 
-        #region Standard sentences
+        #region Standart sentences
 
         private static Dictionary<SentenceIdentifiers, string> SentencesFormats =
-            new Dictionary<SentenceIdentifiers, string>() {
-                { SentenceIdentifiers.AAM, "A=Arrival circled entered|V=V,A=Perpendicular passed at way point|V=V,x.x,N=nm|K=km,c--c" },
-                { SentenceIdentifiers.ALM, "x.x,x.x,xx,x.x,hh,hhhh,hh,hhhh,hhhhhh,hhhhhh,hhhhhh,hhhhhh,hhh,hhh" },
-                { SentenceIdentifiers.APB, "V=Loran-C Blink or SNR warning|A=general warning flag,V=Loran-C Cycle Lock warning flag|A=OK or not used,x.x,R=Right|L=Left,N=nm|K=km,A=Arrival circled entered|V=Invalid,A=Perpendicular passed at way point|V=Invalid,x.x,M=Magnetic|T=True,c--c,x.x,M=Magnetic|T=True,x.x,M=Magnetic|T=True" },
-                { SentenceIdentifiers.APA, "V=Loran-C Blink or SNR warning|A=general warning flag,V=Loran-C Cycle Lock warning flag|A=OK or not used,x.xx,R=Right|L=Left,N=nm|K=km,A=Arrival circled entered|V=Invalid,A=Perpendicular passed at way point|V=Invalid,xxx,M=Magnetic|T=True,c---c" },
-                { SentenceIdentifiers.ASD, "" },
-                { SentenceIdentifiers.BEC, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.y,N=N|S=S,x.x,E=E|W=W,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
-                { SentenceIdentifiers.BOD, "x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,c--c,c--c" },
-                { SentenceIdentifiers.BWC, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
-                { SentenceIdentifiers.BWR, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
-                { SentenceIdentifiers.BWW, "x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,c--c,c--c" },
-                { SentenceIdentifiers.DBK, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
-                { SentenceIdentifiers.DBS, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
-                { SentenceIdentifiers.DBT, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
-                { SentenceIdentifiers.DCN, "xx,cc,x.x,A,cc,x.x,A,cc,x.x,A,A,A,A,x.x,N=nm|K=km,1=Normal pattern|2=Lane identification pattern|3=Lane identification transmissions" },
-                { SentenceIdentifiers.DPT, "x.x,x.x" },
-                { SentenceIdentifiers.DSC, "" },
-                { SentenceIdentifiers.DSE, "" },
-                { SentenceIdentifiers.DSI, "" },
-                { SentenceIdentifiers.DSR, "" },
-                { SentenceIdentifiers.DTM, "xxx,x,xx.xxxx,x,xx.xxxx,x,c--c,xxx" },
-                { SentenceIdentifiers.FSI, "xxxxxx,xxxxxx,c,x" },
-                { SentenceIdentifiers.GBS, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
-                { SentenceIdentifiers.GGA, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,0=Fix not availible|1=GPS fix|2=DGPS fix,xx,x.x,x.x,M,x.x,M,x.x,xxxx" },
-                { SentenceIdentifiers.GLC, "xxxx,x.x,a,x.x,a,x.x,a,x.x,a,x.x,a,x.x,B=Blink|C=Cycle|S=SNR|A=Valid" },
-                { SentenceIdentifiers.GLL, "llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,hhmmss.ss,A=Valid|V=Invalid,A=Valid|V=Invalid" },
-                { SentenceIdentifiers.GNS, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,с--с,xx,x.x,x.x,x.x,x.x,x,a" },
-                { SentenceIdentifiers.GRS, "hhmmss,x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
+            new Dictionary<SentenceIdentifiers, string>() { { SentenceIdentifiers.AAM, "A=Arrival circled entered|V=V,A=Perpendicular passed at way point|V=V,x.x,N=nm|K=km,c--c" },
+                                                            { SentenceIdentifiers.ALM, "x.x,x.x,xx,x.x,hh,hhhh,hh,hhhh,hhhhhh,hhhhhh,hhhhhh,hhhhhh,hhh,hhh" },
+                                                            { SentenceIdentifiers.APB, "V=Loran-C Blink or SNR warning|A=general warning flag,V=Loran-C Cycle Lock warning flag|A=OK or not used,x.x,R=Right|L=Left,N=nm|K=km,A=Arrival circled entered|V=Invalid,A=Perpendicular passed at way point|V=Invalid,x.x,M=Magnetic|T=True,c--c,x.x,M=Magnetic|T=True,x.x,M=Magnetic|T=True" },
+                                                            { SentenceIdentifiers.APA, "V=Loran-C Blink or SNR warning|A=general warning flag,V=Loran-C Cycle Lock warning flag|A=OK or not used,x.xx,R=Right|L=Left,N=nm|K=km,A=Arrival circled entered|V=Invalid,A=Perpendicular passed at way point|V=Invalid,xxx,M=Magnetic|T=True,c---c" },
+                                                            { SentenceIdentifiers.ASD, "" },
+                                                            { SentenceIdentifiers.BEC, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.y,N=N|S=S,x.x,E=E|W=W,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
+                                                            { SentenceIdentifiers.BOD, "x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,c--c,c--c" },
+                                                            { SentenceIdentifiers.BWC, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
+                                                            { SentenceIdentifiers.BWR, "hhmmss.ss,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,x.x,N=nm|K=km,c--c" },
+                                                            { SentenceIdentifiers.BWW, "x.x,T=True|M=Magnetic,x.x,T=True|M=Magnetic,c--c,c--c" },
+                                                            { SentenceIdentifiers.DBK, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
+                                                            { SentenceIdentifiers.DBS, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
+                                                            { SentenceIdentifiers.DBT, "x.x,f=ft|M=m,x.x,f=ft|M=m,x.x,F" },
+                                                            { SentenceIdentifiers.DCN, "xx,cc,x.x,A,cc,x.x,A,cc,x.x,A,A,A,A,x.x,N=nm|K=km,1=Normal pattern|2=Lane identification pattern|3=Lane identification transmissions" },
+                                                            { SentenceIdentifiers.DPT, "x.x,x.x" },
+                                                            { SentenceIdentifiers.DSC, "" },
+                                                            { SentenceIdentifiers.DSE, "" },
+                                                            { SentenceIdentifiers.DSI, "" },
+                                                            { SentenceIdentifiers.DSR, "" },
+                                                            { SentenceIdentifiers.DTM, "xxx,x,xx.xxxx,x,xx.xxxx,x,c--c,xxx" },
+                                                            { SentenceIdentifiers.FSI, "xxxxxx,xxxxxx,c,x" },
+                                                            { SentenceIdentifiers.GBS, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
+                                                            { SentenceIdentifiers.GGA, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,0=Fix not availible|1=GPS fix|2=DGPS fix,xx,x.x,x.x,M,x.x,M,x.x,xxxx" },
+                                                            { SentenceIdentifiers.GLC, "xxxx,x.x,a,x.x,a,x.x,a,x.x,a,x.x,a,x.x,B=Blink|C=Cycle|S=SNR|A=Valid" },
+                                                            { SentenceIdentifiers.GLL, "llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,hhmmss.ss,A=Valid|V=Invalid,A=Valid|V=Invalid" },
+                                                            { SentenceIdentifiers.GNS, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,с--с,xx,x.x,x.x,x.x,x.x,x,a" },
+                                                            { SentenceIdentifiers.GRS, "hhmmss,x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
 
-                /// Missed last paramter in the sentence description, 27 APR 2022
-                // $GNGSA,A,                    3,01,03,04,22,31,09,06,  ,  ,  ,  ,  ,1.57,0.82,1.34,1*05
-                //    GSA,"M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x ,x.x ,x.x,x" },
-                { SentenceIdentifiers.GSA, "M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x,x.x,x.x,x" }, //
-                { SentenceIdentifiers.GST, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
-                { SentenceIdentifiers.GSV, "x,x,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx," },
-                { SentenceIdentifiers.GTD, "x.x,x.x,x.x,x.x,x.x" },
-                { SentenceIdentifiers.GXA, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,c--c,x" },
-                { SentenceIdentifiers.HDG, "x.x,x.x,a,x.x,a" },
-                { SentenceIdentifiers.HDM, "x.x,M" },
-                { SentenceIdentifiers.HDT, "x.x,T" },
-                { SentenceIdentifiers.HEV, "x.x,A" },
-                { SentenceIdentifiers.HSC, "x.x,T,x.x,M" },
-                { SentenceIdentifiers.LCD, "xxxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx" },
-                { SentenceIdentifiers.MSK, "xxx.x,xx,xxx,xx,N" },
-                { SentenceIdentifiers.MSS, "" },
-                { SentenceIdentifiers.MTW, "x.x,C=C|K=K|F=F" },
-                { SentenceIdentifiers.MWD, "" },
-                { SentenceIdentifiers.MWV, "x.x,a,x.x,a,A" },
-                { SentenceIdentifiers.OLN, "aa,xxx,xxx,aa,xxx,xxx,aa,xxx,xxx" },
-                { SentenceIdentifiers.OSD, "x.x,A,x.x,a,x.x,a,x.x,x.x,a" },
-                { SentenceIdentifiers.RMA, "A,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,x.x,x.x,x.x,x.x,a" },
-                { SentenceIdentifiers.RMB, "A,x.x,a,c--c,c--c,llll.ll,a,yyyyy.yy,a,x.x,x.x,x.x,A,A" },
-                { SentenceIdentifiers.RMC, "hhmmss.ss,A=Valid|V=Invalid,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,x.x,ddmmyy,x.x,a,a,..." },
-                { SentenceIdentifiers.ROO, "c---c,...." }, // TODO: !!!
-                { SentenceIdentifiers.ROT, "x.x,A" },
-                { SentenceIdentifiers.RPM, "a,x,x.x,x.x,A" },
-                { SentenceIdentifiers.RSA, "x.x,A,x.x,A" },
-                { SentenceIdentifiers.RSD, "x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,a,a" },
-                { SentenceIdentifiers.RTE, "x.x,x.x,a,c--c,c--c,..." },
-                { SentenceIdentifiers.SFI, "x.x,x.x,xxxxxx,c,xxxxxx,c" },
-                { SentenceIdentifiers.STN, "xx" },
-                { SentenceIdentifiers.TLL, "xx,llll.lll,a,yyyyy.yyy,a,c--c,hhmmss.ss,a,a" },
-                { SentenceIdentifiers.TRF, "hhmmss.ss,xxxxxx,llll.ll,a,yyyyy.yy,a,x.x,x.x,x.x,x.x,xxx,A" },
-                { SentenceIdentifiers.TTM, "xx,x.x,x.x,T=True|R=Relative,x.x,x.x,T=True|R=Relative,x.x,x.x,K=Km|N=Knots|S=Statue miles,c--c,L=Lost|Q=Query|T=Tracking,a,hhmmss.ss,A=Automatic|M=Manual" },
-                { SentenceIdentifiers.TXT, "x,x,x,c--c" },
-                { SentenceIdentifiers.VBW, "x.x,x.x,A,x.x,x.x,A" },
-                { SentenceIdentifiers.VDM, "x,x,c--c,c--c,c--c,x" },
-                { SentenceIdentifiers.VDO, "x,x,c--c,c--c,c--c,x" },
-                { SentenceIdentifiers.VDR, "x.x,T,x.x,M,x.x,N" },
-                { SentenceIdentifiers.VHW, "x.x,T,x.x,M,x.x,N,x.x,K" },
-                { SentenceIdentifiers.VLW, "x.x,N,x.x,N" },
-                { SentenceIdentifiers.VPW, "x.x,N,x.x,M" },
-                { SentenceIdentifiers.VTG, "x.x,T,x.x,M,x.x,N=nk/h,x.x,K=Km/h,a" },
-                { SentenceIdentifiers.VWR, "x.x,a,x.x,N,x.x,M,x.x,K" },
-                { SentenceIdentifiers.WCV, "x.x,N,c--c" },
-                { SentenceIdentifiers.WDC, "" },
-                { SentenceIdentifiers.WDR, "" },
-                { SentenceIdentifiers.WNC, "x.x,N,x.x,K,c--c,c--c" },
-                { SentenceIdentifiers.WPL, "llll.ll,a,yyyyy.yy,a,c--c" },
-                { SentenceIdentifiers.XDR, "a,x.x,a,c--c,a,x.x,a,c--c" },
-                { SentenceIdentifiers.XTE, "A,A,x.x,a,N" },
-                { SentenceIdentifiers.XTR, "x.x,a,N" },
-                { SentenceIdentifiers.ZDA, "hhmmss.ss,xx,xx,xxxx,xx,xx" },
-                { SentenceIdentifiers.ZDL, "hhmmss.ss,hhmmss.ss,c--c" },
-                { SentenceIdentifiers.ZFO, "hhmmss.ss,hhmmss.ss,c--c" },
-                { SentenceIdentifiers.ZTG, "hhmmss.ss,hhmmss.ss,c--c" }
-            };
+                                                            /// Missed last paramter in the sentence description, 27 APR 2022
+                                                            // $GNGSA,A,                    3,01,03,04,22,31,09,06,  ,  ,  ,  ,  ,1.57,0.82,1.34,1*05
+                                                            //    GSA,"M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x ,x.x ,x.x,x" },
+                                                            { SentenceIdentifiers.GSA, "M=Manual|A=Automatic,x,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,xx,x.x,x.x,x.x,x" }, //
+                                                            { SentenceIdentifiers.GST, "hhmmss.ss,x.x,x.x,x.x,x.x,x.x,x.x,x.x" },
+                                                            { SentenceIdentifiers.GSV, "x,x,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx,xx,xx,xxx,xx," },
+                                                            { SentenceIdentifiers.GTD, "x.x,x.x,x.x,x.x,x.x" },
+                                                            { SentenceIdentifiers.GXA, "hhmmss.ss,llll.ll,a,yyyyy.yy,a,c--c,x" },
+                                                            { SentenceIdentifiers.HDG, "x.x,x.x,a,x.x,a" },
+                                                            { SentenceIdentifiers.HDM, "x.x,M" },
+                                                            { SentenceIdentifiers.HDT, "x.x,T" },
+                                                            { SentenceIdentifiers.HEV, "x.x,A" },
+                                                            { SentenceIdentifiers.HSC, "x.x,T,x.x,M" },
+                                                            { SentenceIdentifiers.LCD, "xxxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx" },
+                                                            { SentenceIdentifiers.MSK, "xxx.x,xx,xxx,xx,N" },
+                                                            { SentenceIdentifiers.MSS, "" },
+                                                            { SentenceIdentifiers.MTW, "x.x,C=C|K=K|F=F" },
+                                                            { SentenceIdentifiers.MWD, "" },
+                                                            { SentenceIdentifiers.MWV, "x.x,a,x.x,a,A" },
+                                                            { SentenceIdentifiers.OLN, "aa,xxx,xxx,aa,xxx,xxx,aa,xxx,xxx" },
+                                                            { SentenceIdentifiers.OSD, "x.x,A,x.x,a,x.x,a,x.x,x.x,a" },
+                                                            { SentenceIdentifiers.RMA, "A,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,x.x,x.x,x.x,x.x,a" },
+                                                            { SentenceIdentifiers.RMB, "A,x.x,a,c--c,c--c,llll.ll,a,yyyyy.yy,a,x.x,x.x,x.x,A,A" },
+                                                            { SentenceIdentifiers.RMC, "hhmmss.ss,A=Valid|V=Invalid,llll.ll,N=N|S=S,yyyyy.yy,E=E|W=W,x.x,x.x,ddmmyy,x.x,a,a,..." },
+                                                            { SentenceIdentifiers.ROO, "c---c,...." }, // TODO: !!!
+                                                            { SentenceIdentifiers.ROT, "x.x,A" },
+                                                            { SentenceIdentifiers.RPM, "a,x,x.x,x.x,A" },
+                                                            { SentenceIdentifiers.RSA, "x.x,A,x.x,A" },
+                                                            { SentenceIdentifiers.RSD, "x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,x.x,a,a" },
+                                                            { SentenceIdentifiers.RTE, "x.x,x.x,a,c--c,c--c,..." },
+                                                            { SentenceIdentifiers.SFI, "x.x,x.x,xxxxxx,c,xxxxxx,c" },
+                                                            { SentenceIdentifiers.STN, "xx" },
+                                                            { SentenceIdentifiers.TLL, "xx,llll.lll,a,yyyyy.yyy,a,c--c,hhmmss.ss,a,a" },
+                                                            { SentenceIdentifiers.TRF, "hhmmss.ss,xxxxxx,llll.ll,a,yyyyy.yy,a,x.x,x.x,x.x,x.x,xxx,A" },
+                                                            { SentenceIdentifiers.TTM, "xx,x.x,x.x,T=True|R=Relative,x.x,x.x,T=True|R=Relative,x.x,x.x,K=Km|N=Knots|S=Statue miles,c--c,L=Lost|Q=Query|T=Tracking,a,hhmmss.ss,A=Automatic|M=Manual" },
+                                                            { SentenceIdentifiers.TXT, "x,x,x,c--c" },
+                                                            { SentenceIdentifiers.VBW, "x.x,x.x,A,x.x,x.x,A" },
+                                                            { SentenceIdentifiers.VDR, "x.x,T,x.x,M,x.x,N" },
+                                                            { SentenceIdentifiers.VHW, "x.x,T,x.x,M,x.x,N,x.x,K" },
+                                                            { SentenceIdentifiers.VLW, "x.x,N,x.x,N" },
+                                                            { SentenceIdentifiers.VPW, "x.x,N,x.x,M" },
+                                                            { SentenceIdentifiers.VTG, "x.x,T,x.x,M,x.x,N=nk/h,x.x,K=Km/h,a" },
+                                                            { SentenceIdentifiers.VWR, "x.x,a,x.x,N,x.x,M,x.x,K" },
+                                                            { SentenceIdentifiers.WCV, "x.x,N,c--c" },
+                                                            { SentenceIdentifiers.WDC, "" },
+                                                            { SentenceIdentifiers.WDR, "" },
+                                                            { SentenceIdentifiers.WNC, "x.x,N,x.x,K,c--c,c--c" },
+                                                            { SentenceIdentifiers.WPL, "llll.ll,a,yyyyy.yy,a,c--c" },
+                                                            { SentenceIdentifiers.XDR, "a,x.x,a,c--c,a,x.x,a,c--c" },
+                                                            { SentenceIdentifiers.XTE, "A,A,x.x,a,N" },
+                                                            { SentenceIdentifiers.XTR, "x.x,a,N" },
+                                                            { SentenceIdentifiers.ZDA, "hhmmss.ss,xx,xx,xxxx,xx,xx" },
+                                                            { SentenceIdentifiers.ZDL, "hhmmss.ss,hhmmss.ss,c--c" },
+                                                            { SentenceIdentifiers.ZFO, "hhmmss.ss,hhmmss.ss,c--c" },
+                                                            { SentenceIdentifiers.ZTG, "hhmmss.ss,hhmmss.ss,c--c" },
+
+                                                            { SentenceIdentifiers.VDM, "x,x,x,c--c,c--c,x"},
+                                                            { SentenceIdentifiers.VDO, "x,x,x,c--c,c--c,x"}
+                                                          };
 
         #endregion
 
@@ -1082,10 +1084,10 @@ namespace UCNLNMEA
             {
                 #region Garmin corporation
 
-                {   
+                {
                     ManufacturerCodes.GRM, // Garmin corporation
-                    new Dictionary<string, string>() 
-                    { 
+                    new Dictionary<string, string>()
+                    {
                         {"B", "x.x,x,x,x,x.x,a,0=Check Wiring|1=No Signal|2=Tuning|3=Receiving|4=Scanning,R=RTCM|W=WAAS|N=Non DGPS fix,A=Automatic|W=WAAS Only|R=RTCM Only|N=None"},
                         {"E", "x.x,a,x.x,a,x.x,a"},
                         {"F", "x,x,ddmmyy,hhmmss,x,dddmm.mmmm,N=N|S=S,dddmm.mmmm,E=E|W=W,M=Maual|A=Automatic,0=NoFix|1=2DFix|2=3DFix,x.x,x.x,x.x,x.x"},
@@ -1127,7 +1129,7 @@ namespace UCNLNMEA
                         {"420",""}, // API_Query_Pwr_Sav_Mode, return: PMTK520
                         {"490",""}, // API_Get_Flash_User_Option, return: PMTK590
                         {"520","0=False|1=True"}, // Power saving operation mode 
-                        {"590","x,x,x,x,x,x,x,x,x,x,x,x,0=Disable|1=RTCM|2=SBAS,x"},                                                                            
+                        {"590","x,x,x,x,x,x,x,x,x,x,x,x,0=Disable|1=RTCM|2=SBAS,x"},
                         {"605",""}, /// Query the firmware release information, return: PMTK705
                         {"705","c--c,c--c,c--c"} /// Firmware release version
                     }
@@ -1289,60 +1291,6 @@ namespace UCNLNMEA
 
         #region Formatters
 
-#if FRAMEWORK_LOWER_35
-
-        private delegate object ParserDelegate(string source);
-        private static Dictionary<string, ParserDelegate> parsers = new Dictionary<string, ParserDelegate>()
-        {
-            { "x", x => int.Parse(x) },
-            { "xx", x => int.Parse(x) },
-            { "xxx", x => int.Parse(x) },
-            { "xxxx", x => int.Parse(x) },
-            { "xxxxx", x => int.Parse(x) },
-            { "xxxxxx", x => int.Parse(x) },
-            { "hh", x => Convert.ToByte(x, 16) },
-            { "hhhh", x => Convert.ToUInt16(x, 16) },
-            { "hhhhhh", x => Convert.ToUInt32(x, 16) },
-            { "hhhhhhhh", x => Convert.ToUInt32(x, 16) },
-            { "h--h", x => ParseByteArray(x) },
-            { "x.x", x => double.Parse(x, CultureInfo.InvariantCulture) },
-            { "c--c", x => x },
-            { "llll.ll", x => ParseLatitude(x) },
-            { "yyyyy.yy", x => ParseLongitude(x) },
-            { "hhmmss", x => ParseCommonTime(x) },
-            { "hhmmss.ss", x => ParseCommonTime(x) },
-            { "ddmmyy", x => ParseCommonDate(x) },
-            { "dd/mm/yy", x => ParseDateSlashes(x) },
-            { "dddmm.mmm", x => ParseCommonDegrees(x) }
-
-        };
-
-        private delegate string FormatterDelegate(object source);
-        private static Dictionary<string, FormatterDelegate> formatters = new Dictionary<string, FormatterDelegate>()
-        {
-            { "x", x => ((int)(x)).ToString() },
-            { "xx", x => ((int)(x)).ToString("D2") },
-            { "xxx", x => ((int)(x)).ToString("D3") },
-            { "xxxx", x => ((int)(x)).ToString("D4") },
-            { "xxxxx", x => ((int)(x)).ToString("D5") },
-            { "xxxxxx", x => x.ToString() },
-            { "hh", x => ((byte)x).ToString("X2") },
-            { "hhhh", x => ((ushort)x).ToString("X4") },
-            { "hhhhhh", x => ((uint)x).ToString("X6") },
-            { "hhhhhhhh", x => ((uint)x).ToString("X8") },
-            { "h--h", x => FormatByteArray((byte[])x) },
-            { "x.x", x => ((double)x).ToString("F04", CultureInfo.InvariantCulture).TrimEnd(new char[] {'0'}) },
-            { "c--c", x => x.ToString() },
-            { "llll.ll", x => FormatLatitude((double)x) },
-            { "yyyyy.yy", x => FormatLongitude((double)x) },
-            { "hhmmss", x => FormatTime((DateTime)x, false) },
-            { "hhmmss.ss", x => FormatTime((DateTime)x, true) },
-            { "ddmmyy", x => FormatDate((DateTime)x) },
-            { "dd/mm/yy", x => FormatDateSlashes((DateTime)x) },
-            { "dddmm.mmm", x => FormatDegree((double)x) }
-        };
-
-#else
         private static Dictionary<string, Func<string, object>> parsers = new Dictionary<string, Func<string, object>>()
         {
             { "x", x => int.Parse(x) },
@@ -1368,7 +1316,7 @@ namespace UCNLNMEA
         };
 
         private static Dictionary<string, Func<object, string>> formatters = new Dictionary<string, Func<object, string>>()
-        {            
+        {
             { "x", x => ((int)(x)).ToString() },
             { "xx", x => ((int)(x)).ToString("D2") },
             { "xxx", x => ((int)(x)).ToString("D3") },
@@ -1391,7 +1339,6 @@ namespace UCNLNMEA
             { "dddmm.mmmm", x => FormatDegree((double)x) },
             { "ddd.dddd", x => FormatDecDegree((double)x) }
         };
-#endif
 
         #endregion
 
@@ -1399,12 +1346,7 @@ namespace UCNLNMEA
 
         #region Checksum
 
-#if FRAMEWORK_LOWER_35
-        public delegate byte CheckSumEvaluatorDelegate(string source);
-        public static CheckSumEvaluatorDelegate CheckSumEvaluator = new CheckSumEvaluatorDelegate(GetCheckSum);
-#else
         public static Func<string, byte> CheckSumEvaluator = new Func<string, byte>(GetCheckSum);
-#endif
 
         #endregion
 
@@ -1441,7 +1383,7 @@ namespace UCNLNMEA
 
             sb.Insert(0, SentenceStartDelimiter);
 
-            return sb.ToString();            
+            return sb.ToString();
         }
 
         /// <summary>
@@ -1697,7 +1639,7 @@ namespace UCNLNMEA
         /// <param name="sourceString">string to parse</param>
         /// <returns>Parsed sentence as NMEASentese</returns>
         public static NMEASentence Parse(string sourceString)
-        {            
+        {
             if (!sourceString.EndsWith(SentenceEndDelimiter))
             {
                 throw new ArgumentException(string.Format("{0} sentence must ends with valid sentence end delimiter \"{1}\"", StandartID, @"\r\n"));
@@ -1705,15 +1647,11 @@ namespace UCNLNMEA
 
             var source = sourceString.TrimEnd(SentenceEndDelimiter.ToCharArray());
 
-            if (source.StartsWith(SentenceStartAISDelemiter))
-                source = source.Replace(SentenceStartAISDelemiter, SentenceStartDelimiter.ToString());
-
             if (source.Length > MaxSentenceLength)
                 throw new ArgumentException(string.Format("Specified string \"{0}\" length exceeds {1} characters", source.Length, MaxSentenceLength));
 
-            if (!source.StartsWith(SentenceStartDelimiter.ToString()))
-                throw new ArgumentException(string.Format("{0} sentence must starts with valid sentence start delimiterы \"{1}\" or \"{2}\"", 
-                    StandartID, SentenceStartDelimiter, SentenceStartAISDelemiter));
+            if (!source.StartsWith(SentenceStartDelimiter.ToString()))                
+                throw new ArgumentException(string.Format("{0} sentence must starts with valid sentence start delimiter \"{1}\"", StandartID, SentenceStartDelimiter));
 
             try
             {
@@ -1828,7 +1766,7 @@ namespace UCNLNMEA
                 {
                     string talkerIDString;
                     string sentenceIDString;
-                    
+
                     if (sentenceDescription.StartsWith(TalkerIdentifiers.P.ToString()))
                     {
                         // Proprietary code
@@ -1838,7 +1776,7 @@ namespace UCNLNMEA
                         int start = 1;
                         if (sentenceDescription.Length == 4)
                         {
-                            sentenceDescription += FieldDelimiter + splits[1];                                
+                            sentenceDescription += FieldDelimiter + splits[1];
                             start = 2;
                         }
 
@@ -1873,7 +1811,7 @@ namespace UCNLNMEA
                         }
 
                         return ParseSentence(talkerID, sentenceIDString, parameters);
-                    }                                        
+                    }
                 }
                 else
                 {
@@ -1883,7 +1821,7 @@ namespace UCNLNMEA
             else
             {
                 throw new ArgumentException(string.Format("No field delimiters in specified sentence \"{0}\"", source));
-            }            
+            }
         }
 
         private static void SplitSentence(string source, out string sentence, out string checkSumString)
@@ -1961,7 +1899,7 @@ namespace UCNLNMEA
                         return token;
                     }
                 }
-            }            
+            }
         }
 
         private static object[] ParseParameters(List<string> parameters, string formatString)
